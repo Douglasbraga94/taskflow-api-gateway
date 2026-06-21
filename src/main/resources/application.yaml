@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: api-gateway
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
   cloud:
     gateway:
       server:
@@ -13,6 +17,17 @@ spring:
               uri: ${AUTH_SERVICE_URI:http://localhost:8084}
               predicates:
                 - Path=/api/auth/**
+
+            - id: user-service-register
+              uri: ${USER_SERVICE_URI:http://localhost:8081}
+              predicates:
+                  - Path=/api/users
+                  - Method=POST
+              filters:
+                - name: RequestRateLimiter
+                  args:
+                    redis-rate-limiter.replenishRate: 5
+                    redis-rate-limiter.burstCapacity: 10
 
             - id: user-service
               uri: ${USER_SERVICE_URI:http://localhost:8081}
