@@ -38,3 +38,6 @@ spring:
               uri: ${TASK_SERVICE_URI:http://localhost:8082}
               predicates:
                 - Path=/api/tasks/**
+
+jwt:
+  secret: ${JWT_SECRET:0OL3hz0pZb6pqe6yKvcHFwCqKwIaQZmT9RlSMfgcmRx}
