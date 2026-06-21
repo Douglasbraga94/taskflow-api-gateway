@@ -38,6 +38,20 @@ spring:
               uri: ${TASK_SERVICE_URI:http://localhost:8082}
               predicates:
                 - Path=/api/tasks/**
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowedOrigins:
+                  - ${FRONTEND_URL:http://localhost:4200}
+                allowedMethods:
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+                  - OPTIONS
+                allowedHeaders: "*"
+                allowCredentials: true
+
 
 jwt:
   secret: ${JWT_SECRET:0OL3hz0pZb6pqe6yKvcHFwCqKwIaQZmT9RlSMfgcmRx}
